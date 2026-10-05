@@ -4,7 +4,7 @@
 
 ; Methods
 ; --------------------
-(super) @function
+(super) @keyword.definition
 
 (function_expression_body
   (identifier) @type)
@@ -79,7 +79,8 @@
   name: (identifier) @type)
 
 (scoped_identifier
-  scope: (identifier) @type)
+  scope: (identifier) @type
+  (#not-eq? @type "super"))
 
 (function_signature
   name: (identifier) @function.method)
@@ -93,7 +94,8 @@
 ((scoped_identifier
   scope: (identifier) @type
   name: (identifier) @type)
-  (#match? @type "^[a-zA-Z]"))
+  (#match? @type "^[a-zA-Z]")
+  (#not-eq? @type "super"))
 
 (type_identifier) @type
 
@@ -194,7 +196,7 @@
 ; Parameters
 ; --------------------
 (formal_parameter
-  (identifier) @variable.parameter)
+  name: (identifier) @variable.parameter)
 
 (named_argument
   (label
@@ -295,6 +297,12 @@
 ] @keyword.modifier ; could be @type.qualifier
 
 ; when used as an identifier:
+((identifier) @keyword.definition
+  (#eq? @keyword.definition "super"))
+
+((identifier) @keyword.modifier
+  (#any-of? @keyword.modifier "const" "final"))
+
 ((identifier) @variable.builtin
   (#any-of? @variable.builtin
     "abstract" "as" "covariant" "deferred" "dynamic" "export" "external" "factory" "Function" "get"
