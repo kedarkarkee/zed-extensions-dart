@@ -196,7 +196,7 @@
 ; Parameters
 ; --------------------
 (formal_parameter
-  (identifier) @variable.parameter)
+  name: (identifier) @variable.parameter)
 
 (named_argument
   (label
